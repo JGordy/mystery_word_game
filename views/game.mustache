@@ -1,6 +1,6 @@
 <header>
   <h1>Mystery Word Game</h1>
-  <h3>You have {{{}}} guesses left!</h3>
+  <h3>You have {{#word}}{{#remainingGuesses}}{{.}}{{/remainingGuesses}}{{/word}} guesses left!</h3>
 </header>
  <!-- {word} is a placeholder for now -->
 <div class="main_container">
@@ -29,6 +29,7 @@
   </form>
   <div class="guessed_letters">
 
-    <p>Letters guessed: <span></span></p> <!-- letters is a placeholder -->
+    <p>Letters guessed: <span>{{#word}}{{#singleGuess}}{{.}}, {{/singleGuess}}{{/word}}</span></p> <!-- letters is a placeholder -->
   </div>
+
 </div>

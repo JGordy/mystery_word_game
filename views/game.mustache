@@ -2,10 +2,33 @@
   <h1>Mystery Word Game</h1>
   <h3>You have {{{}}} guesses left!</h3>
 </header>
-{{#word}} // word is a placeholder for now
-<div class="word_container">
-  <div class="letter_box">
-    {{.}}
+ <!-- {word} is a placeholder for now -->
+<div class="main_container">
+  <div class="word_container">
+    {{#word}}
+    {{#guessed}}
+    {{#letter}}
+    <div class="letter_box guessed">
+      {{.}}
+    </div>
+    {{/letter}}
+    {{/guessed}}
+    {{^guessed}}
+    {{#placeholder}}
+    <div class="letter_box not_guessed">
+      {{.}}
+    </div>
+    {{/placeholder}}
+    {{/guessed}}
+    {{/word}}
+  </div>
+   <!-- {word} is a placeholder for now -->
+  <form class="guess_box" action="/game" method="post">
+    <input type="text" name="letter" placeholder="Guess a letter">
+    <button type="submit" name="submit">Make a guess</button>
+  </form>
+  <div class="guessed_letters">
+
+    <p>Letters guessed: <span></span></p> <!-- letters is a placeholder -->
   </div>
 </div>
-{{/word}} // word is a placeholder for now

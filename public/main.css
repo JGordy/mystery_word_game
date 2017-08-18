@@ -7,3 +7,44 @@ header {
   display: flex;
   justify-content: space-between;
 }
+
+.main_container {
+  /*background-color: gray;*/
+  width: 70%;
+  margin: 50px auto;
+  height: 500px;
+}
+
+.word_container {
+  display: flex;
+  margin: 20px;
+}
+
+.letter_box {
+  flex-grow: 1;
+  font-size: 48px;
+  margin: 10px;
+  height: 100px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  margin: 25px 10px;
+}
+
+input {
+  height: 35px;
+  padding: 0px 10px;
+}
+
+button {
+  margin-left: 25px;
+}
+
+.guessed_letters {
+  padding: 10px;
+  margin: 10px;
+}

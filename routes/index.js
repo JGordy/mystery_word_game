@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 
-
-let words = ["rebel", "chewbacca", "palindrome", "latte", "jalepenos"];
+const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
+// let words = ["rebel", "chewbacca", "palindrome", "latte", "jalepenos"];
 let randomWord;
 let word = [];
 
@@ -16,9 +17,11 @@ router.get("/", function(req, res) {
       let letters = {letter: randomWord[i],
                       guessed: false,
                     placeholder: "_"}
-      let remaining =  {remainingGuesses: 8}
-      word.push(letters)
+      word.push(letters);
     }
+    let remaining =  {remainingGuesses: 8}
+    word.push(remaining);
+
     res.render("game",{word: word});
   } else {
     res.render("game", {word: word});

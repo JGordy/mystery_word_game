@@ -10,7 +10,7 @@ const routes = require("./routes/index.js")
 
 const app = express();
 
-const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
+
 
 app.engine("mustache", mustacheExpress());
 app.set("views", path.join(__dirname, "./views"));

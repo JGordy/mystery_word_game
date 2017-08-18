@@ -1,0 +1,9 @@
+body {
+  background: radial-gradient(circle, #eee, #fff);
+  font-family: sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}

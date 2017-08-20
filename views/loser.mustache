@@ -1,0 +1,34 @@
+<header>
+  <h1>Mystery_Word_Game</h1>
+
+  <h1 id="outOfGuesses">You are out of guesses!</h1>
+</header>
+
+<div class="main_container">
+  <div class="word_container">
+    {{#word}}
+    {{#guessed}}
+    {{#letter}}
+    <div class="letter_box guessed">
+      {{.}}
+    </div>
+    {{/letter}}
+    {{/guessed}}
+    {{^guessed}}
+    {{#letter}}
+    <div class="letter_box never_guessed">
+      {{.}}
+    </div>
+    {{/letter}}
+    {{/guessed}}
+    {{/word}}
+  </div>
+
+  <form class="guess_box" action="/reset" method="post">
+    <h1 id="lose_statement">You lost!</h1>
+    <button id="lose_new_word" type="submit" name="submit">Play again?</button>
+  </form>
+  <div class="guessed_letters">
+    <p>Letters guessed: <span>{{#word}}{{#singleGuess}}{{.}}, {{/singleGuess}}{{/word}}</span></p>
+  </div>
+</div>

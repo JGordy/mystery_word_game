@@ -1,0 +1,32 @@
+<header>
+  <h1>Mystery_Word_Game</h1>
+ {{#word}}
+ {{#remainingGuesses}}
+   <h1>Guesses Remaining: <span id="guesses_left">{{.}}</span></h1>
+ {{/remainingGuesses}}
+ {{/word}}
+</header>
+
+<div class="main_container">
+  <div class="word_container">
+    {{#word}}
+    {{#letter}}
+    <div class="letter_box all_guessed">
+      {{.}}
+    </div>
+    {{/letter}}
+    {{/word}}
+  </div>
+
+
+
+  <form class="guess_box" action="/reset" method="post">
+    <h1 id="winner_statement">You got it!</h1>
+    <button id="new_word" type="submit" name="submit">Try a new word</button>
+  </form>
+
+  <div class="guessed_letters">
+    <p>Letters guessed: <span>{{#word}}{{#singleGuess}}{{.}}, {{/singleGuess}}{{/word}}</span></p>
+  </div>
+
+</div>

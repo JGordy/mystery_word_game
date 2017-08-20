@@ -5,13 +5,13 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .main_container {
   /*background-color: gray;*/
   width: 70%;
-  margin: 50px auto;
+  margin: 100px auto;
   height: 500px;
 }
 
@@ -45,6 +45,61 @@ button {
 }
 
 .guessed_letters {
+  font-size: 24px;
   padding: 10px;
   margin: 10px;
+}
+
+.never_guessed {
+  color: red;
+  border-bottom: 3px solid red;
+  padding-bottom: 0px;
+}
+
+#out_of_guesses {
+  color: red;
+}
+
+#guesses_left {
+  border: 2px solid black;
+  border-radius: 5px 20px;
+  background-color: #fff;
+  color: darkcyan;
+  font-size: 32px;
+  padding: 10px;
+}
+
+.all_guessed {
+  color: #5BD34E;
+}
+
+#new_word {
+  height: 35px;
+  margin-top: 20px;
+}
+
+#lose_new_word {
+  height: 35px;
+  margin-top: 20px;
+}
+
+#winner_statement {
+  background-image: linear-gradient(to right, darkcyan, lime);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#lose_statement {
+  background-image: linear-gradient(to right, red, black, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.error_container {
+  display: flex;
+  justify-content: center;
+}
+
+.error_message {
+color: red;
 }

@@ -1,8 +1,12 @@
 <header>
-  <h1>Mystery Word Game</h1>
-  <h3>You have {{#word}}{{#remainingGuesses}}{{.}}{{/remainingGuesses}}{{/word}} guesses left!</h3>
+  <h1>Mystery_Word_Game</h1>
+ {{#word}}
+ {{#remainingGuesses}}
+   <h1>Guesses Remaining: <span id="guesses_left">{{.}}</span></h1>
+ {{/remainingGuesses}}
+ {{/word}}
 </header>
- <!-- {word} is a placeholder for now -->
+
 <div class="main_container">
   <div class="word_container">
     {{#word}}
@@ -22,14 +26,23 @@
     {{/guessed}}
     {{/word}}
   </div>
-   <!-- {word} is a placeholder for now -->
   <form class="guess_box" action="/game" method="post">
     <input type="text" name="letter" placeholder="Guess a letter" autofocus>
     <button type="submit" name="submit">Make a guess</button>
   </form>
+  <form class="new_word" action="/reset" method="post">
+    <button type="submit" name="submit">Give up? Get a new word</button>
+  </form>
   <div class="guessed_letters">
-
-    <p>Letters guessed: <span>{{#word}}{{#singleGuess}}{{.}}, {{/singleGuess}}{{/word}}</span></p> <!-- letters is a placeholder -->
+    <p>Letters guessed: <span>{{#word}}{{#singleGuess}}{{.}}, {{/singleGuess}}{{/word}}</span></p>
   </div>
-
+  <div class="error_container">
+{{#word}}
+{{#message}}
+<h2 class="error_message">{{.}}</h2>
+{{/message}}
+{{^message}}
+{{/message}}
+{{/word}}
+  </div>
 </div>

@@ -7,9 +7,12 @@ const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().sp
 let randomWord;
 let word = [];
 let remaining;
+let wordguessed;
+let messages = []
 
 router.get("/", function(req, res) {
-  if (word == '') {
+  if (!req.session.word) {
+    remaining =  {remainingGuesses: 8};
     randomWord = words[Math.floor(Math.random() * words.length)];
     console.log("randomWord; ", randomWord);
 
@@ -19,60 +22,83 @@ router.get("/", function(req, res) {
                     placeholder: "_"}
       word.push(letters);
     }
-    remaining =  {remainingGuesses: 8}
     word.push(remaining);
-
+    req.session.word = word;
+    req.session.token = "jjrttuu677"
+    // console.log(req.session.word);
     res.render("game",{word: word});
   } else {
     res.render("game", {word: word});
   }
 });
 
-// also in the "if" correct guesses don't count against the player. Incorrect guesses should subtract from the total number of guesses
 router.post("/game", function(req, res) {
+
   let temp = req.body.letter;
-  // test
+  // finding the index of "remainingGuesses" and guessed: false
   index = word.findIndex(x => x.remainingGuesses);
+  wordGuessed = word.findIndex(y => y.guessed == false)
 
-  console.log(index);
-  //end test
-  if (randomWord.includes(temp)) {
-    word.forEach(function(single){
-      if (single.letter == req.body.letter) {
-        single.guessed = true;
-          res.redirect("/");
-      } else {
-          // else statement
+  req.checkBody("letter", "Guesses must contain only 1 letter!").len(1, 1);
+  req.checkBody("letter", "Guesses cannot be numbers or special characters!").isAlpha();
+
+  let errors = req.getValidationResult();
+
+  errors.then(function(result) {
+      result.array().forEach(function(error) {
+        messages.push({message: error.msg});
+        word.push({message: error.msg})
+      });
+
+      let errObject = {
+        errors: messages,
+        info: req.body
+      };
+
+//////////////////////////////////////////////
+      if (randomWord.includes(temp)) {
+        word.forEach(function(single){
+          if (single.letter == req.body.letter) {
+            single.guessed = true;
+
+            if (wordGuessed == -1) {
+              res.render("winner", {word: word});
+            } else {
+              res.redirect("/");
+            }
+          }
+        })
+      } else if (word[index].remainingGuesses === 1) {
+        word[index].remainingGuesses = '';
+        let guess = {
+          singleGuess: req.body.letter,
+        }
+        word.push(guess);
+        res.render("loser", {word: word});
+      } else if (!randomWord.includes(temp)) {
+        word[index].remainingGuesses -= 1;
+        let guess = {
+          singleGuess: req.body.letter,
+        }
+        messages = [];
+        word.push(guess)
+        res.redirect("/")
+      } else if (messages !== []) {
+        res.redirect("/");
+        messages = [];
       }
-    })
-  } else {
+    }); /// end of errors.then
 
-    word[index].remainingGuesses -= 1;
-
-    let guess = {
-      singleGuess: req.body.letter,
-    }
-
-    word.push(guess)
-    console.log(word);
-
-    res.redirect("/")
-  }
-
+  // console.log("word: ", word);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+router.post("/reset", function(req, res) {
+  word = [];
+  messages = [];
+  req.session.destroy(function(err) {
+  console.log("Error: ", err);
+});
+res.redirect("/");
+})
 
 module.exports = router;

@@ -7,14 +7,13 @@ const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().sp
 let randomWord;
 let word = [];
 let remaining;
-let wordguessed;
 let messages = []
 
 router.get("/", function(req, res) {
   if (!req.session.word) {
     remaining =  {remainingGuesses: 8};
     randomWord = words[Math.floor(Math.random() * words.length)];
-    console.log("randomWord; ", randomWord);
+    console.log("randomWord: ", randomWord);
 
     for (var i = 0; i < randomWord.length; i++) {
       let letters = {letter: randomWord[i],
@@ -37,7 +36,6 @@ router.post("/game", function(req, res) {
   let temp = req.body.letter;
   // finding the index of "remainingGuesses" and guessed: false
   index = word.findIndex(x => x.remainingGuesses);
-  wordGuessed = word.findIndex(y => y.guessed == false)
 
   req.checkBody("letter", "Guesses must contain only 1 letter!").len(1, 1);
   req.checkBody("letter", "Guesses cannot be numbers or special characters!").isAlpha();
@@ -58,9 +56,9 @@ router.post("/game", function(req, res) {
 //////////////////////////////////////////////
       if (randomWord.includes(temp)) {
         word.forEach(function(single){
-          if (single.letter == req.body.letter) {
+          if (single.letter === req.body.letter) {
             single.guessed = true;
-
+            let wordGuessed = word.findIndex(y => y.guessed == false)
             if (wordGuessed == -1) {
               res.render("winner", {word: word});
             } else {
@@ -88,8 +86,7 @@ router.post("/game", function(req, res) {
         messages = [];
       }
     }); /// end of errors.then
-
-  // console.log("word: ", word);
+// console.log("word: ", word);
 });
 
 router.post("/reset", function(req, res) {

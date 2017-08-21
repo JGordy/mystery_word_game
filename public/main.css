@@ -23,6 +23,7 @@ header {
 .letter_box {
   flex-grow: 1;
   font-size: 48px;
+  font-family: "Sedgwick Ave", sans-serif;
   margin: 10px;
   height: 100px;
   text-align: center;
@@ -52,7 +53,7 @@ button {
 
 .never_guessed {
   color: red;
-  border-bottom: 3px solid red;
+  /*border-bottom: 3px solid red;*/
   padding-bottom: 0px;
 }
 
